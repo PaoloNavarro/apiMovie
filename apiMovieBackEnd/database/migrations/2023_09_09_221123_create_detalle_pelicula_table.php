@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('detalle_pelicula', function (Blueprint $table) {
+        Schema::create('detalle_peliculas', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('pelicula_id');
             $table->unsignedBigInteger('genero_id');
@@ -20,7 +20,7 @@ return new class extends Migration
 
             $table->foreign('pelicula_id')->references('id')->on('peliculas')->onDelete('cascade');
             $table->foreign('genero_id')->references('id')->on('generos')->onDelete('cascade');
-            $table->foreign('actor_id')->references('id')->on('actores')->onDelete('cascade');
+            $table->foreign('actor_id')->references('id')->on('actors')->onDelete('cascade');
         });
     }
 

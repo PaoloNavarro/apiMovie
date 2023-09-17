@@ -20,7 +20,7 @@ function App() {
         <Route path="/generos" element={<GenerosComponent />} />
         <Route path="/actores" element={<ActoresComponent />} />
         <Route path="/actores/crear" element={<CrearRegistroComponent formData={{ tabla: 'actores', nombre: '' }} />} />
-        <Route path="/peliculas/crear" element={<CrearRegistroComponent formData={{ tabla: 'peliculas', titulo: '', anio: '' }} />} />
+        <Route path="/peliculas/crear" element={<CrearRegistroComponent formData={{ tabla: 'peliculas', titulo: '', anio: '',descripcion: '' }} />} />
         <Route path="/generos/crear" element={<CrearRegistroComponent formData={{ tabla: 'generos', nombre: '' }} />} />
         <Route path="/:tabla/editar/:id" element={<EditarRegistroComponent />} />
         <Route path="/pelicula/detallecrear" element={<CrearDetallePelicula />} />

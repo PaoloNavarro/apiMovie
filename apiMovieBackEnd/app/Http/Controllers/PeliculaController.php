@@ -38,6 +38,7 @@ class PeliculaController extends Controller
         $pelicula = new Pelicula([
             'titulo' => $request->input('titulo'),
             'anio' => $request->input('anio'),
+            'descrpion' => $request->input('descripcion')
             // Asigna otros campos según sea necesario
         ]);
     

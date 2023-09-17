@@ -36,7 +36,7 @@ function CrearDetallePelicula() {
       ) : (
         <div>
           <h3>Crear Detalles de Película</h3>
-          {/* Resto del código para actores y géneros */}
+          {/* Resto del código para actores y géneros*/}
         </div>
       )}
     </div>

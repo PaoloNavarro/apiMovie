@@ -14,15 +14,18 @@ return new class extends Migration
         Schema::create('detalle_peliculas', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('pelicula_id');
-            $table->unsignedBigInteger('genero_id');
-            $table->unsignedBigInteger('actor_id');
+            $table->unsignedBigInteger('genero_id')->nullable();
+            $table->unsignedBigInteger('actor_id')->nullable();
             $table->timestamps();
-
+    
             $table->foreign('pelicula_id')->references('id')->on('peliculas')->onDelete('cascade');
-            $table->foreign('genero_id')->references('id')->on('generos')->onDelete('cascade');
-            $table->foreign('actor_id')->references('id')->on('actors')->onDelete('cascade');
+            
+            // Puedes eliminar las restricciones de clave externa en género y actor si no son siempre necesarias
+            // $table->foreign('genero_id')->references('id')->on('generos')->onDelete('cascade');
+            // $table->foreign('actor_id')->references('id')->on('actors')->onDelete('cascade');
         });
     }
+    
 
     public function down()
     {

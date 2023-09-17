@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\DetallePelicula;
+use App\Models\Pelicula;
+use App\Models\Genero;
+use App\Models\Actor;
+use Illuminate\Database\QueryException;
+
 
 
 class DetallePeliculaController extends Controller
@@ -25,51 +30,66 @@ class DetallePeliculaController extends Controller
         return response()->json(['data' => $detalle]);
     }
 
+
     public function store(Request $request)
     {
-        // Validación de los datos del formulario
-        $request->validate([
-            'pelicula_id' => 'required|integer',
-            'genero_id' => 'required|integer',
-            'actor_id' => 'required|integer',
-        ]);
+        try {
+            // Validación de los datos del formulario para la película
+            $request->validate([
+                'titulo' => 'required|string',
+                'anio' => 'required|integer',
+                'descripcion' => 'required|string',
+            ]);
     
-        // Crear un nuevo detalle de película
-        $detalle = DetallePelicula::create([
-            'pelicula_id' => $request->input('pelicula_id'),
-            'genero_id' => $request->input('genero_id'),
-            'actor_id' => $request->input('actor_id'),
-        ]);
+            // Comprobar si la película ya existe en la base de datos
+            $pelicula = Pelicula::where('titulo', $request->input('titulo'))->first();
     
-        return response()->json(['data' => $detalle], 201);
+            if (!$pelicula) {
+                // Crear una nueva película si no existe
+                $pelicula = Pelicula::create([
+                    'titulo' => $request->input('titulo'),
+                    'anio' => $request->input('anio'),
+                    'descripcion' => $request->input('descripcion'),
+                ]);
+            }
+    
+            // Procesar los géneros si están presentes
+            if ($request->has('generos') && is_array($request->input('generos'))) {
+                $generos = [];
+                foreach ($request->input('generos') as $generoNombre) {
+                    $genero = Genero::firstOrCreate(['nombre' => $generoNombre]);
+                    $generos[] = $genero->id;
+                }
+                // Asociar los géneros con la película
+                $pelicula->Genero()->sync($generos);
+            }
+    
+            // Procesar los actores si están presentes
+            if ($request->has('actores') && is_array($request->input('actores'))) {
+                $actores = [];
+                foreach ($request->input('actores') as $actorNombre) {
+                    $actor = Actor::firstOrCreate(['nombre' => $actorNombre]);
+                    $actores[] = $actor->id;
+                }
+                // Asociar los actores con la película
+                $pelicula->Actor()->sync($actores);
+            }
+    
+            // Devolver una respuesta exitosa
+            return response()->json(['message' => 'Película almacenada con éxito'], 201);
+        } catch (QueryException $e) {
+            // Captura excepciones de consulta y devuelve un mensaje de error específico
+            return response()->json(['message' => 'Error al procesar la solicitud: ' . $e->getMessage()], 500);
+        } catch (\Exception $e) {
+            // Captura cualquier otra excepción y devuelve un mensaje de error genérico
+            return response()->json(['message' => 'Error al procesar la solicitud: ' . $e->getMessage()], 500);
+        }
     }
     
-
-    public function update(Request $request, $id)
-{
-    // Buscar el detalle de película por ID
-    $detalle = DetallePelicula::find($id);
-
-    if (!$detalle) {
-        return response()->json(['message' => 'Detalle de película no encontrado'], 404);
-    }
-
-    // Validación de los datos del formulario
-    $request->validate([
-        'pelicula_id' => 'required|integer',
-        'genero_id' => 'required|integer',
-        'actor_id' => 'required|integer',
-    ]);
-
-    // Actualizar los campos del detalle de película
-    $detalle->update([
-        'pelicula_id' => $request->input('pelicula_id'),
-        'genero_id' => $request->input('genero_id'),
-        'actor_id' => $request->input('actor_id'),
-    ]);
-
-    return response()->json(['data' => $detalle], 200);
-}
+    
+    
+    
+    
 public function destroy($id)
 {
     // Buscar el detalle de película por ID

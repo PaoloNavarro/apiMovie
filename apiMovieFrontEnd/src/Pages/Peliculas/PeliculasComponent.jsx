@@ -46,7 +46,7 @@ function PeliculasComponent() {
   const handleCrear = () => {
     console.log('Crear nueva película');
     // Implementa la lógica para crear una nueva película aquí
-    navigate('/peliculas/detallecrear');
+    navigate('/pelicula/detallecrear');
   };
 
   return (

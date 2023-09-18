@@ -1,0 +1,249 @@
+/* Keyframes para la animación de agrandar y temblar las estrellas */
+@keyframes enlargeAndShake {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2) rotate(3deg);
+    }
+}
+
+/* Keyframes para la animación de brillo de las estrellas */
+@keyframes glow {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.8;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+/* Keyframes para la animación de temblor del botón de basurero */
+@keyframes shake {
+    0% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-5px);
+    }
+    50% {
+        transform: translateX(5px);
+    }
+    75% {
+        transform: translateX(-5px);
+    }
+    100% {
+        transform: translateX(5px);
+    }
+}
+
+/* Keyframes para la animación de eliminación */
+@keyframes slideOutRight {
+    0% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+/* Estilos para las estrellas de calificación */
+.star-rating .fas.fa-star {
+    font-size: 1.5rem; /* Tamaño de las estrellas por defecto */
+    color: #6c757d; /* Estrellas en gris por defecto */
+    cursor: pointer; /* Cambia el cursor al pasar sobre las estrellas */
+    transition: color 0.2s; /* Agrega una transición suave de color */
+    animation: none; /* Inicialmente, desactiva la animación */
+    position: relative; /* Agrega posición relativa para las estrellas */
+}
+
+/* Estilo para estrellas activas */
+.star-rating .fas.fa-star.filled {
+    font-size: 1.7rem; /* Tamaño de las estrellas activas (un poco más grandes) */
+    color: #fdba2c; /* Color dorado para estrellas activas */
+    transition: color 0.2s; /* Agrega una transición suave de color */
+    animation: none; /* Inicialmente, desactiva la animación */
+}
+
+/* Animación de agrandar las estrellas al pasar el mouse */
+.star-rating .fas.fa-star:hover {
+    animation: enlargeAndShake 0.5s ease infinite; /* Aplica la animación al pasar el mouse */
+}
+
+/* Estilo para el botón de favorito */
+.btn-favorite {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 0.5rem 0.5rem;
+    border-radius: 50%;
+    cursor: pointer; /* Cambia el cursor al pasar sobre el corazón */
+    transition: transform 0.2s, background-color 0.2s, color 0.2s; /* Agrega transiciones suaves para escala, color de fondo y color */
+}
+
+/* Estilo para el botón de favorito cuando es favorito */
+.btn-favorite.favorito {
+    transform: scale(1.1); /* Escala el corazón cuando se marca como favorito */
+    background-color: #fdba2c; /* Cambia el color de fondo a dorado cuando es favorito */
+    color: #fff; /* Cambia el color del ícono a blanco cuando es favorito */
+    animation: none; /* Desactiva la animación de brillo al hacer clic */
+}
+
+/* Estilo para el botón de favorito cuando se deja presionado */
+.btn-favorite.favorito:active {
+    background-color: #fdba2c; /* Mantiene el color de fondo dorado */
+}
+
+/* Estilo para el botón de basurero */
+.btn-danger {
+    transition: transform 0.2s, color 0.2s; /* Agrega transiciones suaves para escala y color */
+}
+
+/* Animación de temblor del botón de basurero al pasar el mouse */
+.btn-danger:hover {
+    animation: shake 0.3s ease infinite; /* Aplica la animación al pasar el mouse */
+}
+
+/* Animación de eliminación de la tarjeta al hacer clic en el botón de basurero */
+.btn-danger:active {
+    animation: slideOutRight 0.3s ease; /* Aplica la animación al hacer clic */
+}
+
+/* Estilo para el texto de calificación arriba de las estrellas */
+.star-rating-label {
+    text-align: start;
+    margin-top: 0.5rem;
+    font-size: 1rem;
+    color: #6c757d; /* Estilo de texto en gris por defecto */
+}
+
+/* Estilos para las tarjetas */
+.card.zoom-card {
+    transition: transform 0.2s; /* Agrega una transición suave */
+    height: 100%; /* Asegura que todas las tarjetas tengan la misma altura */
+}
+
+.card.zoom-card:hover {
+    transform: scale(1.05); /* Escala el elemento al 105% del tamaño original */
+}
+
+/* Estilos para las imágenes dentro de las tarjetas */
+.card.zoom-card img {
+    max-width: 50%;
+    max-height: 200px; /* Ajusta la altura máxima según tus preferencias */
+    margin: 10px 100px; /* Centra la imagen verticalmente dentro de la tarjeta */
+}
+
+/* Estilo para el footer personalizado */
+.card-footer-custom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1rem;
+    background-color: #e8e8e8;
+}
+
+/* Estilos para la paginación */
+.pagination button {
+    cursor: pointer;
+}
+
+/* Estilos para el botón de "Agregar Película" */
+.add-movie-button {
+    transition: background-color 0.2s, box-shadow 0.2s;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    font-size: 1.2rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  .add-movie-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.2); /* Color de fondo inicialmente transparente */
+    border: 2px solid transparent;
+    transition: background-color 0.3s, transform 0.3s, opacity 0.3s;
+    transform: scaleX(0); /* Inicialmente, el borde está colapsado horizontalmente */
+    transform-origin: left;
+    z-index: -1;
+  }
+  
+  .add-movie-button:hover::before {
+    transform: scaleX(1); /* Al pasar el mouse, expande el borde horizontalmente */
+    background-color: rgba(255, 255, 255, 0.2); /* Cambia el color de fondo al pasar el mouse */
+    opacity: 0;
+  }
+  
+  .add-movie-button i {
+    margin-right: 5px; /* Espacio entre el icono y el texto */
+  }
+/* Estilo para el ícono en la barra de navegación */
+.navbar-brand .navbar-icon {
+    position: relative;
+    font-size: 24px; /* Tamaño del ícono por defecto */
+    color: white; /* Color del ícono por defecto */
+    transition: transform 0.3s, color 0.3s; /* Agrega transiciones suaves para escala y color */
+  }
+  
+  /* Estilo para la imagen del navbar-brand al pasar el mouse */
+.navbar-brand:hover {
+    filter: brightness(1.2); /* Ajusta el brillo al 120% al pasar el mouse */
+  }
+  
+  
+  /* Estilo para las opciones del menú */
+  .navbar-nav .nav-item .nav-link {
+    position: relative;
+    text-decoration: none;
+    color: white; /* Color de texto por defecto */
+    transition: color 0.3s; /* Agrega una transición suave de color */
+  }
+  
+  /* Agrega una línea inferior a la opción del menú cuando está activa */
+  .navbar-nav .nav-item .nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100%;
+    height: 2px; /* Altura de la línea inferior */
+    background-color: #fd362c; /* Color de la línea cuando está activa */
+  }
+/* Estilos para las rutas con transición */
+.route-enter {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  
+  .route-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 300ms, transform 300ms;
+  }
+  
+  .route-exit {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .route-exit-active {
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 300ms, transform 300ms;
+  }
+  
+  /* Estilo para el contenedor de las rutas */
+  .route-container {
+    position: relative;
+  }

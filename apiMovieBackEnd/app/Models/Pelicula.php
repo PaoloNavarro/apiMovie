@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Pelicula extends Model
 {
-    protected $fillable = ['titulo', 'anio','descripcion'];
+    protected $fillable = ['titulo', 'anio','descripcion','favorito','puntuacion'];
     
     public function detalles()
     {

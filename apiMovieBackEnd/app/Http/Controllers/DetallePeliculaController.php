@@ -37,7 +37,7 @@ class DetallePeliculaController extends Controller
             // Validación de los datos del formulario para la película
             $request->validate([
                 'titulo' => 'required|string',
-                'anio' => 'required|integer',
+                'anio' => 'required|string',
                 'descripcion' => 'required|string',
             ]);
     
@@ -51,6 +51,11 @@ class DetallePeliculaController extends Controller
                     'anio' => $request->input('anio'),
                     'descripcion' => $request->input('descripcion'),
                 ]);
+                // Verificar si la clave 'imagen' está presente en el cuerpo de la solicitud
+                if ($request->has('imagen')) {
+                    $pelicula->imagen = $request->input('imagen');
+                    $pelicula->save();
+                }
             }
     
             // Procesar los géneros si están presentes

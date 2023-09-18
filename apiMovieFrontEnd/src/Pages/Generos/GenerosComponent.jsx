@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import TablasComponent from '../../components/TablasComponent';
 import { useNavigate } from 'react-router-dom';
-import { borrarRegistro } from '../../utilities/api';
+import { obtenerDatos, borrarRegistro } from '../../utilities/api'; // Ajusta la importación según tu estructura de carpetas
+import Spinner from 'react-bootstrap/Spinner'; // Importa el componente Spinner
+import '../../css/stylos.css';
+
 
 function GenerosComponent() {
   const [generos, setGeneros] = useState([]);
@@ -10,10 +13,9 @@ function GenerosComponent() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch('http://localhost:8000/api/generos')
-      .then((response) => response.json())
-      .then((data) => {
-        setGeneros(data.data);
+    obtenerDatos('generos') // Llama a la función obtenerDatos con el nombre de la tabla 'generos'
+      .then((dataObtenida) => {
+        setGeneros(dataObtenida);
         setIsLoading(false);
       })
       .catch((error) => {
@@ -21,7 +23,6 @@ function GenerosComponent() {
         setIsLoading(false);
       });
   }, []);
-
   const encabezados = ['nombre'];
 
   const handleEditar = (fila) => {
@@ -52,12 +53,16 @@ function GenerosComponent() {
   return (
     <div>
       <h2 className="m-3">Géneros</h2>
-      <button onClick={handleCrear} className="btn btn-success m-3">
-        Crear Nuevo Género
+      <button onClick={handleCrear} className="btn btn-success add-movie-button  m-3">
+      <i className="fas fa-plus"></i>Crear Nuevo Género
       </button>
+      
 
       {isLoading ? (
+        <div className="text-center">
+        <Spinner animation="border" variant="primary" />
         <p>Cargando datos...</p>
+      </div>
       ) : error ? (
         <p>Error: {error.message}</p>
       ) : (
@@ -67,6 +72,8 @@ function GenerosComponent() {
           onEditar={handleEditar}
           onBorrar={handleBorrar}
           nombreTabla="Tabla de generos"
+          
+          
         />
       )}
     </div>

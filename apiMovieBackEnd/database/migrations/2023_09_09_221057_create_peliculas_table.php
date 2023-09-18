@@ -16,6 +16,9 @@ return new class extends Migration
             $table->string('titulo');
             $table->string('anio');
             $table->string('descripcion');
+            $table->string('favorito')->nullable();
+            $table->string("puntuacion")->nullable();
+            $table->string("imagen")->nullable();
             $table->timestamps();
         });
     }

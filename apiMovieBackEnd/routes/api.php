@@ -46,6 +46,11 @@ Route::prefix('peliculas')->group(function () {
     Route::post('/', [PeliculaController::class, 'store']);
     Route::put('/{id}', [PeliculaController::class, 'update']);
     Route::delete('/{id}', [PeliculaController::class, 'destroy']);
+    Route::put('/{id}/asignar-puntuacion', [PeliculaController::class, 'asignarPuntuacion']);
+    Route::put('/{id}/hacer-favorito', [PeliculaController::class, 'hacerFavorito']);
+    Route::post('/filtrar', [PeliculaController::class, 'filtrar']);
+
+
 });
 
 // Grupo de rutas para el controlador de Detalles de Películas

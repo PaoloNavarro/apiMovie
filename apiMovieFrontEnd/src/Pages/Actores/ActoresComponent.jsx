@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import TablasComponent from '../../components/TablasComponent';
 import { useNavigate } from 'react-router-dom';
-import { borrarRegistro } from '../../utilities/api';
+import { obtenerDatos } from '../../utilities/api'; // Ajusta la importación según tu estructura de carpetas
+import Spinner from 'react-bootstrap/Spinner'; // Importa el componente Spinner
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '../../css/stylos.css';
+
 
 function ActoresComponent() {
   const [actores, setActores] = useState([]);
@@ -10,10 +14,9 @@ function ActoresComponent() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch('http://localhost:8000/api/actores')
-      .then((response) => response.json())
-      .then((data) => {
-        setActores(data.data);
+    obtenerDatos('actores') // Llama a la función obtenerDatos con el nombre de la tabla 'actores'
+      .then((dataObtenida) => {
+        setActores(dataObtenida);
         setIsLoading(false);
       })
       .catch((error) => {
@@ -52,12 +55,16 @@ function ActoresComponent() {
   return (
     <div>
       <h2 className="m-3">Actores</h2>
-      <button onClick={handleCrear} className="btn btn-success m-3">
-        Crear Nuevo Actor
+      <button onClick={handleCrear} className="btn btn-success  add-movie-button m-3 ">
+      <i className="fas fa-plus"></i>Crear Nuevo Actor
       </button>
 
       {isLoading ? (
-        <p>Cargando datos...</p>
+        // Muestra el spinner mientras se cargan los datos
+        <div className="text-center">
+          <Spinner animation="border" variant="primary" />
+          <p>Cargando datos...</p>
+        </div>
       ) : error ? (
         <p>Error: {error.message}</p>
       ) : (
